@@ -1,3 +1,8 @@
 asgiref==3.7.2
+Babel==2.12.1
 Django==4.2.4
+django-phonenumber-field==7.1.0
+phonenumbers==8.13.19
+Pillow==10.0.0
+python-decouple==3.8
 sqlparse==0.4.4

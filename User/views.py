@@ -41,26 +41,15 @@ def signupview(request):
     return render(request, 'registrations/signup.html', context)
 
 #login
-class UserLoginView(View):
-    def get(self, *args, **kwargs):
-        form = LoginForm()
-        context = {
-            'form': form,
-        }
-        return render(self.request, 'registrations/login.html', context)
-    def post(self, backend='django.contrib.auth.backends.ModelBackend', *args, **kwargs):
-        form = LoginForm(self.request.POST or None)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = auth.authenticate(username=username, password=password)
-            if user is not None and user.is_active:
-                auth.login(self.request, user)
-                return redirect('/')
-            else:
-                return redirect('user:login')
-        else:
-            return redirect ('user:sign')
+def login(request):
+    username = request.POST['username']
+    password = request.POST['pasword']
+    user = auth.authenticate(username=username, password=password)
+    if user is not None and user.is_active:
+        auth.login(request, user)
+        return redirect('/')
+    else:
+        return HttpResponseRedirect('user:login')
 
 #change password
 def change_password(request):

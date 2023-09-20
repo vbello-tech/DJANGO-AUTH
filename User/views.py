@@ -82,3 +82,7 @@ class ChangePasswordView(View, LoginRequiredMixin):
             form = PasswordChangeForm(user=self.request.user)
 
 
+class LogoutView(View, LoginRequiredMixin):
+    def post(self, *args, **kwargs):
+        auth.logout(self.request)
+        return HttpResponseRedirect ('/')

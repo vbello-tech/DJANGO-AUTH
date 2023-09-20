@@ -5,6 +5,7 @@ from .views import (
     SignupView,
     LoginView,
     ChangePasswordView,
+    LogoutView
 )
 
 from django.contrib.auth.views import (
@@ -22,6 +23,7 @@ urlpatterns = [
     path('signup/', SignupView.as_view(), name="signup"),
     path('login/', LoginView.as_view(), name="login"),
     path('change-password/', ChangePasswordView.as_view(), name="change_password"),
+    path('logout/', LogoutView.as_view(), name="logout"),
 
     # authentication 2
 

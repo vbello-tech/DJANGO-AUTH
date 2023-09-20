@@ -37,3 +37,8 @@ LOGGING = {
 }
 
 SECURE_SSL_REDIRECT = False
+
+#mail
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 1025
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

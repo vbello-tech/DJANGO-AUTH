@@ -19,7 +19,7 @@ app_name = "user"
 urlpatterns = [
     #authentication 1
     path('profile/', UserProfile, name="profile"),
-    path('signup/', SignupView, name="signup"),
+    path('signup/', SignupView.as_view(), name="signup"),
     path('login/', LoginView.as_view(), name="login"),
     path('change-password/', ChangePasswordView.as_view(), name="change_password"),
 
@@ -32,8 +32,9 @@ urlpatterns = [
     ), name="password_reset"),
 
     # PasswordResetDoneView shows a success message for the above
-    path('password-reset-done/', PasswordResetDoneView.as_view(template_name='registrations/password_reset_done.html'),
-         name="password_reset_done"),
+    path('password-reset-done/', PasswordResetDoneView.as_view(
+        template_name='registrations/password_reset_done.html'),
+        name="password_reset_done"),
 
     # PasswordResetConfirmView checks the link the user clicked and prompts for a new password
     path('password-reset-confirm/(<uidb64>)-(<token>)/', PasswordResetConfirmView.as_view(

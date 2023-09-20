@@ -22,7 +22,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'warning.log',
+            'filename': BASE_DIR / 'logs.log',
             'formatter': 'verbose',
         },
     },
@@ -35,3 +35,5 @@ LOGGING = {
     },
     "root": {"level": "INFO", "handlers": ["file"]},
 }
+
+SECURE_SSL_REDIRECT = False

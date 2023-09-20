@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import TemplateView, DetailView, View, ListView
+from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
@@ -25,44 +25,60 @@ def UserProfile(request):
     return render(request, 'registrations/profile.html', context)
 
 #sign up
-def signupview(request):
-    if request.method == 'POST':
-        form = NewUSerForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            logger.info(f"{user.username} signed up @ {timezone.now()}")
-            return redirect('/')
-    else:
+class SignupView(View):
+    def get(self, *args, **kwargs):
         form = NewUSerForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'registrations/signup.html', context)
+        context = {
+            'form': form
+        }
+        return render(self.request, 'registrations/signup.html', context)
+    def post(self, *args, **kwargs):
+        if self.request.method == 'POST':
+            form = NewUSerForm(self.request.POST)
+            if form.is_valid():
+                user = form.save()
+                logger.info(f"{user.username} signed up @ {timezone.now()}")
+                return redirect('/')
+            else:
+                form = NewUSerForm()
 
 #login
-def login(request):
-    username = request.POST['username']
-    password = request.POST['pasword']
-    user = auth.authenticate(username=username, password=password)
-    if user is not None and user.is_active:
-        auth.login(request, user)
-        return redirect('/')
-    else:
-        return HttpResponseRedirect('user:login')
+class LoginView(View):
+    def get(self, *args, **kwargs):
+        form = LoginForm()
+        context = {
+            'form': form,
+        }
+        return render(self.request, 'registrations/login.html', context)
+    def post(self, *args, **kwargs):
+        form = LoginForm(self.request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(self.request, username=username, password=password)
+            auth.login(self.request, user)
+            logger.info(f"{username} signed up @ {timezone.now()}")
+            return redirect('/')
+        else:
+            return redirect ('user:login')
 
 #change password
-def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(data=request.POST, user=request.user)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            return redirect('/')
-    else:
-        form = PasswordChangeForm(data=request.POST, user=request.user)
+class ChangePasswordView(View, LoginRequiredMixin):
+    def get(self, *args, **kwargs):
+        form = PasswordChangeForm(user=self.request.user)
+        context = {
+            'form': form
+        }
+        return render(self.request, 'registrations/change_password.html', context)
+    def post(self, *args, **kwargs):
+        if self.request.method == 'POST':
+            form = PasswordChangeForm(data=self.request.POST, user=self.request.user)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(self.request, form.user)
+                logger.info(f"{self.request.user.username} changed password @ {timezone.now()}")
+                return redirect('/')
+        else:
+            form = PasswordChangeForm(user=self.request.user)
 
-    context = {
-        'form': form
-    }
-    return render(request, 'registrations/change_password.html', context)
+

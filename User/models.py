@@ -55,9 +55,9 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     # required for creating user
-    REQUIRED_FIELDS = ['username',]
+    REQUIRED_FIELDS = ['email',]
 
     class Meta:
         ordering = ['-date_joined']

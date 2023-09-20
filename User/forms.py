@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import User
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget, PhoneNumberPrefixWidget
@@ -23,7 +23,6 @@ class NewUSerForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
 
 class LoginForm(forms.Form):
     username = forms.CharField(required=True, widget=forms.TextInput(attrs={

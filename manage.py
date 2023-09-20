@@ -3,11 +3,17 @@
 import os
 import sys
 
+#change runserver port
+from django.core.management.commands.runserver import Command as runserver
+
 
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Project.settings.development')
+
+    #runserver port
+    runserver.default_port = "7000"
 
     if os.getenv('DJANGO_SETTINGS_MODULE'):
         os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv('DJANGO_SETTINGS_MODULE')

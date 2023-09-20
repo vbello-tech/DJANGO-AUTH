@@ -2,3 +2,4 @@
 venv/
 db.sqlite3
 warning.log
+logs.log

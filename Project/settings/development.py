@@ -39,6 +39,15 @@ LOGGING = {
 SECURE_SSL_REDIRECT = False
 
 #mail
-EMAIL_HOST = "localhost"
+"""EMAIL_HOST = "localhost"
 EMAIL_PORT = 1025
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+"""
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = ' odunayobello1@gmail.com'
+EMAIL_HOST_PASSWORD = 'estppelvoiexyfrq'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

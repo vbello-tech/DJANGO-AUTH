@@ -4,3 +4,5 @@ db.sqlite3
 warning.log
 logs.log
 .env
+__pycache__/
+.DS_Store

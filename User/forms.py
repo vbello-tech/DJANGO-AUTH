@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import User
-from phonenumber_field.formfields import PhoneNumberField
-from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget, PhoneNumberPrefixWidget
 
 
 class NewUSerForm(UserCreationForm):
@@ -25,8 +23,8 @@ class NewUSerForm(UserCreationForm):
         return user
 
 class LoginForm(forms.Form):
-    username = forms.CharField(required=True, widget=forms.TextInput(attrs={
-        'placeholder': 'USERNAME',
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
+        'placeholder': 'EMAIL ADDRESS',
     }))
     password = forms.CharField(required=True, widget=forms.PasswordInput(attrs={
         'placeholder': 'PASSWORD',

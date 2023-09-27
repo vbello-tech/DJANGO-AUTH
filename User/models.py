@@ -47,10 +47,6 @@ class User(AbstractUser):
     username = models.CharField(max_length=200, unique=True)
     email = models.CharField(max_length=200, unique=True)
     password = models.CharField(max_length=200)
-    bio = models.CharField(max_length=200, blank=True, null=True)
-    avatar = models.ImageField(blank=True, null=True, upload_to='Avatars/')
-    portfolio = models.URLField(blank=True, null=True)
-    phone_number = PhoneNumberField(blank=True, null=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     objects = CustomUserManager()
